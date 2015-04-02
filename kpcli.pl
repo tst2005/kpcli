@@ -4511,7 +4511,7 @@ sub setup_timeout_handling {
           }
           # Update the state->{last_activity_time} only if not already past
           # the timeout; the command could have been one one of the the
-          # timeout_exempt ones, as defined in main Term::SehllUI data.
+          # timeout_exempt ones, as defined in main Term::ShellUI data.
           if ($idletime <= $opts->{timeout}) {
             $state->{last_activity_time}=time;
           }
