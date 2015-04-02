@@ -1,5 +1,24 @@
 #!/bin/sh
 
+# This script is a wrapper for kpcli.pl
+
+
+# It allow to pass keepassx files directly without option (autodetection is done on the file extention)
+#
+# Sample :
+#   $ kpcli /path/to/my/keepassx.*
+# expanded to :
+#   $ kpcli /path/to/my/keepassx.kdb /path/to/my/keepassx.key
+# and will call :
+#   $ kpcli.pl -kdb /path/to/my/keepassx.kdb -key /path/to/my/keepassx.key
+#
+
+# TODO: support -cfg and *.cfg file to autodetect the path to *.kdb and *.key files
+
+DB=""
+KEY=""
+CFG=""
+
 run_kpcli_pl() {
 	if type kpcli.pl >/dev/null 2>&1; then
 		kpcli.pl "$@"
@@ -8,14 +27,16 @@ run_kpcli_pl() {
 	fi
 }
 
-KDB=""
-KEY=""
-
 while [ $# -gt 0 ]; do
 	case "$1" in
+		-h|--help|-help) run_kpcli_pl "$@" ; exit 0 ;;
+		--kdb|-kdb) shift; KDB="$1" ;;
 		*.kdb) KDB="$1" ;;
+		--key|-key) shift; KEY="$1" ;;
 		*.key) KEY="$1" ;;
-		*.conf) ;;
+		-cfg|--cfg|-conf|--conf) shift; CFG="$1" ;;
+		*.conf|*.cfg) CFG="$1" ;;
+		*) echo >&2 "ERROR: unknown option $1"; exit 1;;
 	esac
 	shift
 done
