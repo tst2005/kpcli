@@ -84,8 +84,8 @@ my $DEFAULT_PASSWD_LEN = 20; # Default length of generated passwords.
 my $DEFAULT_PASSWD_MIN = 1;  # Minimum length of generated passwords.
 my $DEFAULT_PASSWD_MAX = 50; # Maximum length of generated passwords.
 my $DEFAULT_ENTRY_ICON = 0;  # In keepassx, icon 0 is a golden key
-my $DEfAULT_GROUP_ICON = 49; # In keepassx, icon 49 is an opened file folder
-my $DEfAULT_BAKUP_ICON = 2;  # In keepassx, icon 2 is a warning sign
+my $DEFAULT_GROUP_ICON = 49; # In keepassx, icon 49 is an opened file folder
+my $DEFAULT_BAKUP_ICON = 2;  # In keepassx, icon 2 is a warning sign
 my $FOUND_DIR = '_found';    # The find command's results go in /_found/
 my $MAX_ATTACH_SIZE = 2*1024**2; # Maximum size of entry file attachments
 
@@ -2017,7 +2017,7 @@ sub get_recycle_group_path {
     if (! defined($state->{all_grp_paths_fwd}->{$grp_path})) {
       my $group = $state->{kdb}->add_group({
         title => $grp_path,
-        icon => $DEfAULT_BAKUP_ICON,
+        icon => $DEFAULT_BAKUP_ICON,
       }); # root level group
       refresh_state_all_paths();
       $state->{kdb_has_changed}=1;
@@ -3013,14 +3013,14 @@ sub cli_mkdir($) {
   if ($path eq '') {
     $group = $state->{kdb}->add_group({
         title => $newdir,
-	icon => $DEfAULT_GROUP_ICON,
+	icon => $DEFAULT_GROUP_ICON,
     }); # root level group
   } elsif (defined($state->{all_grp_paths_fwd}->{$path})) {
     my $group_id=$state->{all_grp_paths_fwd}->{$path};
     $group = $state->{kdb}->add_group({
 		title => $newdir,
 		group => $group_id,
-		icon => $DEfAULT_GROUP_ICON,
+		icon => $DEFAULT_GROUP_ICON,
 	});
   } else {
     print "Cannot make directory at path " . humanize_path($path) . "\n";
