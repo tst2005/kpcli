@@ -1,0 +1,15 @@
+#!/bin/sh
+
+for pkg in \
+	libclone-perl \
+	libcrypt-rijndael-perl \
+	libsort-naturally-perl \
+	libterm-shellui-perl \
+	libfile-keepass-perl \
+	libterm-readline-gnu-perl \
+	libcapture-tiny-perl \
+; do
+	if ! dpkg -l "$pkg" >/dev/null 2>&1; then
+		echo "missing $pkg package. you should apt-get install $pkg"
+	fi
+done

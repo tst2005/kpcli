@@ -1,0 +1,24 @@
+#!/bin/sh
+
+run_kpcli_pl() {
+	if type kpcli.pl >/dev/null 2>&1; then
+		kpcli.pl "$@"
+	elif [ -x ./kpcli.pl ]; then
+		./kpcli.pl "$@"
+	fi
+}
+
+KDB=""
+KEY=""
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		*.kdb) KDB="$1" ;;
+		*.key) KEY="$1" ;;
+		*.conf) ;;
+	esac
+	shift
+done
+
+run_kpcli_pl "${KDB:+--kdb "$KDB"}" "${KDB:+--key "$KEY"}"
+
